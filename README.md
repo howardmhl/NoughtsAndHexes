@@ -35,7 +35,5 @@ This project uses third-party assets licensed for use.
 
 ## License
 
-This is a hobby / fan project.
-Code is provided under *(MIT / GPL / proprietary - specify if
-needed)*.
+This is a hobby project.
 Third-party assets remain the property of their respective creators.
