@@ -5,138 +5,141 @@
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0">
 		<title>Noughts & Hexes</title>
 		<style>
-      :root {
-        --page-bg: #4579c9;
-      }
+  :root {
+    --page-bg: #4579c9;
+    --canvas-bg: #0c1325;
+  }
 
-      html, body, #canvas {
-        margin: 0;
-        padding: 0;
-        border: 0;
-      }
+  html, body, #canvas {
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
 
-      html, body {
-        height: 100%;
-      }
+  html, body {
+    height: 100%;
+  }
 
-      body {
-        /* Center the game */
-        display: flex;
-        align-items: center;
-        justify-content: center;
+  body {
+    /* Center the game */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-        background-color: var(--page-bg);
-        color: white;
-        overflow: hidden;
-        touch-action: none;
+    background-color: var(--page-bg);
+    color: white;
+    overflow: hidden;
+    touch-action: none;
 
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      }
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
 
-      /* Game canvas styling */
-      #canvas {
-        display: block;
-        background: #0c1325;               /* game backdrop */
-        border-radius: 24px;               /* soft corners to match UI frame */
-        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
-      }
+  #canvas {
+    display: block;
 
-      #canvas:focus {
-        outline: none;
-      }
+    /* Fixed canvas size */
+    width: 1280px;
+    height: 720px;
 
-      /* Loading overlay */
-      #status, #status-splash, #status-progress {
-        position: absolute;
-        left: 0;
-        right: 0;
-      }
+    background: var(--canvas-bg);
+    border-radius: 24px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
+  }
 
-      #status, #status-splash {
-        top: 0;
-        bottom: 0;
-      }
+  #canvas:focus {
+    outline: none;
+  }
 
-      #status {
-        background-color: rgba(0, 0, 0, 0.8);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        visibility: hidden;
-      }
+  /* Floating button */
+  .dossier-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
 
-      #status-splash {
-        max-height: 100%;
-        max-width: 100%;
-        margin: auto;
-      }
+    background: #f7e0c3;
+    color: #4f3a30;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 14px;
+    border: 1px solid #e2c59d;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
 
-      #status-splash.show-image--false {
-        display: none;
-      }
+    transition: 0.15s ease;
+    z-index: 9999;
+  }
 
-      #status-splash.fullsize--true {
-        height: 100%;
-        width: 100%;
-        object-fit: contain;
-      }
+  .dossier-btn:hover {
+    background: #ffe8c6;
+    transform: translateY(-2px);
+  }
 
-      #status-splash.use-filter--false {
-        image-rendering: pixelated;
-      }
+  /* Loading overlay */
+  #status, #status-splash, #status-progress {
+    position: absolute;
+    left: 0;
+    right: 0;
+  }
 
-      #status-progress,
-      #status-notice {
-        display: none;
-      }
+  #status, #status-splash {
+    top: 0;
+    bottom: 0;
+  }
 
-      #status-progress {
-        bottom: 10%;
-        width: 50%;
-        margin: 0 auto;
-      }
+  #status {
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+  }
 
-      #status-notice {
-        background-color: #5b3943;
-        border-radius: 0.5rem;
-        border: 1px solid #9b3943;
-        color: #e0e0e0;
-        font-family: 'Noto Sans', 'Droid Sans', Arial, sans-serif;
-        line-height: 1.3;
-        margin: 0 2rem;
-        overflow: hidden;
-        padding: 1rem;
-        text-align: center;
-        z-index: 1;
-      }
+  #status-splash {
+    max-height: 100%;
+    max-width: 100%;
+    margin: auto;
+  }
 
-	  .tutorial-btn {
-		position: absolute;
-		top: 20px;
-		left: 20px;
+  #status-splash.show-image--false {
+    display: none;
+  }
 
-		background: #f7e0c3;              /* parchment tone */
-		color: #4f3a30;
-		padding: 8px 16px;
-		border-radius: 10px;
-		font-family: "Quicksand", sans-serif;
-		font-weight: 600;
-		text-decoration: none;
-		font-size: 14px;
-		border: 1px solid #e2c59d;
-		box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  #status-splash.fullsize--true {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+  }
 
-		transition: 0.15s ease;
-		z-index: 9999; /* stays above the game */
-		}
+  #status-splash.use-filter--false {
+    image-rendering: pixelated;
+  }
 
-		.tutorial-btn:hover {
-		background: #ffe8c6;
-		transform: translateY(-2px);
-	  }
+  #status-progress, #status-notice {
+    display: none;
+  }
 
-    </style>
+  #status-progress {
+    bottom: 10%;
+    width: 50%;
+    margin: 0 auto;
+  }
+
+  #status-notice {
+    background-color: #5b3943;
+    border-radius: 0.5rem;
+    border: 1px solid #9b3943;
+    color: #e0e0e0;
+    font-family: 'Noto Sans', 'Droid Sans', Arial, sans-serif;
+    line-height: 1.3;
+    margin: 0 2rem;
+    overflow: hidden;
+    padding: 1rem;
+    text-align: center;
+    z-index: 1;
+  }
+</style>
 		<link id="-gd-engine-icon" rel="icon" type="image/png" href="index.icon.png" />
 <link rel="apple-touch-icon" href="index.apple-touch-icon.png"/>
 <script src="coi-serviceworker.js"></script>
