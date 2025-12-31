@@ -1,6 +1,6 @@
 # Noughts & Hexes
 
-Play in the browser, no download required.
+Play in the browser.
 
 ## Credits & Attributions
 
